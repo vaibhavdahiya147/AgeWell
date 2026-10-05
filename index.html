@@ -11,6 +11,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/assets/planner.css">
+  <script src="/assets/planner.js" defer></script>
   <style>
     :root{--ink:#253b86;--blue:#335aca;--sky:#e8f6ff;--line:#c8e5f5;--muted:#526784}
     *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:100px}body{margin:0;color:var(--ink);font-family:'DM Sans',Arial,sans-serif;font-size:16px;line-height:1.65;background:#fff}
@@ -35,7 +37,7 @@
   <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:p-3">Skip to content</a>
   <header><div class="wrap nav">
     <a class="logo hand" href="#" aria-label="AgeWell home"><span class="logo-mark"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M5 22h8l5-12 6 21 5-9h6" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>AgeWell</a>
-    <nav class="navlinks" aria-label="Main navigation"><a href="#problem">Why AgeWell</a><a href="#solution">How it works</a><a href="#launch">Our launch note</a></nav>
+    <nav class="navlinks" aria-label="Main navigation"><a href="#problem">Why AgeWell</a><a href="#solution">How it works</a><a href="#planner">Try AgeWell</a></nav>
     <a class="button" href="#waitlist">Join the waitlist</a>
   </div></header>
   <main id="main">
@@ -44,7 +46,7 @@
         <div class="pill"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m10 2 2 5 5 3-5 2-2 6-2-6-5-2 5-3Z" stroke="currentColor" stroke-width="1.4"/></svg>Care that connects your family</div>
         <h1>One health team.<br>One plan.<br><span class="underline">Every doctor.</span></h1>
         <p class="hero-copy">A little less chasing. A little more peace of mind. Bring your parents’ medicines, appointments and follow-ups into one connected care plan—even when you live miles away.</p>
-        <div class="cta-row"><a class="button" href="#waitlist">Join early access</a><a class="button secondary" href="#solution">See how it works</a></div>
+        <div class="cta-row"><a class="button" href="#planner">Plan your family’s week</a><a class="button secondary" href="#waitlist">Join early access</a></div>
         <p class="small-note">Built for independent parents. And the families who care.</p>
         <div class="hero-foot"><span><span class="check">✓</span> Parent-led sharing</span><span><span class="check">✓</span> A named coordinator</span><span><span class="check">✓</span> One connected record</span></div>
       </div>
@@ -80,6 +82,33 @@
       </div>
       <div class="care-path hand" aria-label="Care workflow"><span>Gather the details</span><span class="path-separator" aria-hidden="true">›</span><span>Keep the plan current</span><span class="path-separator" aria-hidden="true">›</span><span>Follow through together</span></div><p class="privacy">Your parents’ independence comes first. Sharing is consent-based, and clinical decisions stay with qualified healthcare professionals.</p>
     </div></section>
+    <section id="planner" class="section notebook"><div class="wrap">
+      <p class="eyebrow">Try the AgeWell promise</p><h2 class="section-title">One week.<br>Two helping hands.</h2>
+      <p class="section-intro">Turn an existing routine into a shared weekly checklist. Enter only the tasks and timings already agreed with your parent. AgeWell helps divide the follow-through between two family members.</p>
+      <div class="live-metrics" aria-live="polite"><div><strong id="plans-count">—</strong><span>care plans saved</span></div><div><strong id="common-task">—</strong><span>most common care task</span></div><p id="stats-state">Connecting to the live care database…</p></div>
+      <div class="planner-grid"><form id="care-form" class="planner-card">
+        <h3 class="hand">What’s already in the routine?</h3>
+        <p class="planner-hint">Use an anonymous or sample routine. No names, ages, symptoms, medicine names or doses.</p>
+        <fieldset><legend>Daily tasks · India time (IST)</legend>
+          <div class="routine-row"><label><input type="checkbox" id="morning" name="morning"> Morning medicine reminder</label><input type="time" id="morningTime" name="morningTime" value="08:00" aria-label="Existing morning medicine time"></div>
+          <div class="routine-row"><label><input type="checkbox" id="evening" name="evening"> Evening medicine reminder</label><input type="time" id="eveningTime" name="eveningTime" value="20:00" aria-label="Existing evening medicine time"></div>
+          <div class="routine-row"><label><input type="checkbox" id="walk" name="walk"> Existing walk routine</label><input type="time" id="walkTime" name="walkTime" value="17:00" aria-label="Existing walk routine time"></div>
+          <label class="planner-check"><input type="checkbox" id="refill" name="refill"> Check medicine stock this week</label>
+          <p class="planner-hint">Stock check is a Monday evening admin task. Medicine reminders keep the time you enter; follow only your prescriber’s instructions.</p>
+        </fieldset>
+        <fieldset><legend>Already-booked appointment</legend><div class="planner-fields"><div><label for="appointmentDay">Day this week</label><select id="appointmentDay" name="appointmentDay"><option>None</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select></div><div><label for="appointmentTime">Existing appointment time</label><input type="time" id="appointmentTime" name="appointmentTime" value="11:00"></div></div></fieldset>
+        <fieldset><legend>When can your family help?</legend><div class="planner-fields"><div><label for="memberA">Family member A</label><select id="memberA" name="memberA"><option value="morning">Usually mornings</option><option value="evening">Usually evenings</option><option value="flexible">Flexible</option></select></div><div><label for="memberB">Family member B</label><select id="memberB" name="memberB"><option value="evening">Usually evenings</option><option value="morning">Usually mornings</option><option value="flexible">Flexible</option></select></div></div></fieldset>
+        <div class="planner-note"><label for="question">Coordination question (optional)</label><input id="question" name="question" maxlength="160" placeholder="For example: can you split these tasks?" aria-describedby="question-hint"><p id="question-hint" class="planner-hint">Used only to check whether this request is safe. The note is not saved or sent to the AI.</p></div>
+        <label class="planner-check consent-check"><input type="checkbox" id="care-consent" required> I have permission to use this anonymous routine. I agree that the selected tasks are sent to Google Gemini and stored in AgeWell’s Supabase database.</label>
+        <div class="planner-actions"><button type="submit" class="button" id="generate-plan" disabled>Checking planner setup…</button><button type="button" class="sample-button" id="load-sample">Use a sample routine</button></div>
+        <p class="planner-hint">3 attempts per visitor. Medication advice and symptom assessment are outside this feature.</p>
+        <p id="plan-status" class="planner-status" role="status" aria-live="polite"></p>
+      </form>
+      <div class="planner-card plan-output" id="plan-output" aria-busy="false">
+        <div id="plan-empty"><span class="empty-symbol hand" aria-hidden="true">✓</span><h3 class="hand">A clearer week starts here.</h3><p>Select the existing routines on the left. Your shared checklist will appear here, with a family member assigned to each task.</p><p class="planner-hint">A coordination draft, not a diagnosis. This preview does not send reminders, book appointments or connect a live care coordinator.</p></div>
+        <div id="plan-result" hidden><p class="eyebrow">Your shared plan</p><h3 class="hand">This week, together.</h3><p id="plan-notice" class="planner-hint"></p><div id="plan-tasks"></div><div class="planner-actions"><button type="button" id="download-plan" class="button secondary">Download checklist</button><button type="button" id="copy-plan" class="sample-button">Copy checklist</button></div><p id="plan-meta" class="planner-hint"></p><p id="export-status" class="planner-hint" role="status"></p></div>
+      </div></div>
+    </div></section>
     <section id="launch" class="section"><div class="wrap launch-grid">
       <div class="launch-aside"><p class="eyebrow">Our launch announcement</p><h2 class="section-title">More room for<br>“How was your day?”</h2><p class="section-intro">We’re building AgeWell with families who know what it takes to care across distance.</p><div class="quote-mark" aria-hidden="true">“</div><p class="launch-quote hand">Care can travel.<br>The worry shouldn’t have to.</p><a href="#waitlist" class="button secondary">Be part of early access</a></div>
       <article class="launch-card"><div class="launch-card-header"><div class="avatar hand" aria-hidden="true">Aw</div><div><strong>AgeWell</strong><p>A note to families caring from afar</p></div></div>
@@ -100,7 +129,7 @@
         </div></div><button type="button" id="read-more" class="read-more" aria-expanded="false" aria-controls="full-announcement">Read the full launch note</button>
       </article>
     </div></section>
-    <section id="waitlist" class="waitlist notebook"><div class="wrap"><div class="waitlist-box"><div><p class="eyebrow">Let’s build better care, together</p><h2>A little closer.<br>Even from miles away.</h2><p class="waitlist-copy">Join the AgeWell early access waitlist.<br>Help shape a simpler way to care for your parents.</p></div><div><form id="waitlist-form"><label for="email">Your email address</label><div class="form-row"><input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" maxlength="254" required aria-describedby="form-note form-status"><button class="button" type="submit">Join the waitlist</button></div><p id="form-note" class="form-note">Preview form: your entry stays in this browser. No registration is sent.</p><p id="form-status" class="form-status" role="status" aria-live="polite"></p></form></div></div></div></section>
+    <section id="waitlist" class="waitlist notebook"><div class="wrap"><div class="waitlist-box"><div><p class="eyebrow">Let’s build better care, together</p><h2>A little closer.<br>Even from miles away.</h2><p class="waitlist-copy">Join the AgeWell early access waitlist.<br>Help shape a simpler way to care for your parents.</p></div><div><form id="waitlist-form"><label for="email">Your email address</label><div class="form-row"><input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" maxlength="254" required aria-describedby="form-note form-status"><button class="button" type="submit" id="waitlist-submit">Join the waitlist</button></div><div class="honeypot" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" tabindex="-1" autocomplete="off"></div><label class="waitlist-consent"><input type="checkbox" id="waitlist-consent" required> I agree to store my email with AgeWell in Supabase and receive early-access updates.</label><p id="form-note" class="form-note">Only your email and signup consent are saved. No parent’s health information is requested.</p><p id="form-status" class="form-status" role="status" aria-live="polite"></p></form></div></div></div></section>
   </main>
   <footer><div class="wrap footer-inner"><a href="#" class="logo hand"><span class="logo-mark"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M5 22h8l5-12 6 21 5-9h6" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>AgeWell</a><p>One connected plan. A family that stays informed.</p><p>© <span id="year">2026</span> AgeWell</p></div></footer>
   <script>
@@ -124,14 +153,6 @@
       document.getElementById('full-announcement').hidden = expanded;
       this.setAttribute('aria-expanded', String(!expanded));
       this.textContent = expanded ? 'Read the full launch note' : 'Show less';
-    });
-    document.getElementById('waitlist-form').addEventListener('submit', function (event) {
-      event.preventDefault();
-      const email = document.getElementById('email').value.trim();
-      if (!this.reportValidity()) return;
-      const status = document.getElementById('form-status');
-      try {localStorage.setItem('agewell_waitlist_preview', JSON.stringify({email, savedAt: new Date().toISOString()})); status.textContent = 'Interest saved in this browser only. You have not joined a live waitlist.'; this.reset();}
-      catch {status.textContent = 'This browser could not save your entry. No registration was sent.';}
     });
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
